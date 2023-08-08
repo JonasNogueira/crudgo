@@ -1,0 +1,227 @@
+definitions:
+  handler.CreateStudentRequest:
+    properties:
+      lab:
+        type: string
+      name:
+        type: string
+      period:
+        type: string
+    type: object
+  handler.CreateStudentResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.StudentResponse'
+      message:
+        type: string
+    type: object
+  handler.DeleteStudentResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.StudentResponse'
+      message:
+        type: string
+    type: object
+  handler.ErrorResponse:
+    properties:
+      errorCode:
+        type: string
+      message:
+        type: string
+    type: object
+  handler.ListStudentsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schemas.StudentResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  handler.ShowStudentResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.StudentResponse'
+      message:
+        type: string
+    type: object
+  handler.UpdateStudentRequest:
+    properties:
+      Lab:
+        type: string
+      name:
+        type: string
+      period:
+        type: string
+    type: object
+  handler.UpdateStudentResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.StudentResponse'
+      message:
+        type: string
+    type: object
+  schemas.StudentResponse:
+    properties:
+      createdAt:
+        type: string
+      deteledAt:
+        type: string
+      id:
+        type: integer
+      lab:
+        type: string
+      name:
+        type: string
+      period:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /student:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a new  Student
+      parameters:
+      - description: Student identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.DeleteStudentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete student
+      tags:
+      - Students
+    get:
+      consumes:
+      - application/json
+      description: Show Student
+      parameters:
+      - description: Student identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ShowStudentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Show Student
+      tags:
+      - Students
+    post:
+      consumes:
+      - application/json
+      description: Create a new  Student
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateStudentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.CreateStudentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create Student
+      tags:
+      - Students
+    put:
+      consumes:
+      - application/json
+      description: Update a job Student
+      parameters:
+      - description: Student Identification
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Student data to Update
+        in: body
+        name: Student
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateStudentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.UpdateStudentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Update Student
+      tags:
+      - Students
+  /students:
+    get:
+      consumes:
+      - application/json
+      description: List all students
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ListStudentsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List students
+      tags:
+      - Students
+swagger: "2.0"
